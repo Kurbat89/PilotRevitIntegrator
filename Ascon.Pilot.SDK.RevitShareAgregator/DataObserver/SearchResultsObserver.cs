@@ -1,6 +1,7 @@
 ﻿using System;
+using Ascon.Pilot.SDK;
 
-namespace Ascon.Pilot.SDK.RevitShareAgregator.DataObserver
+namespace Ascon.Pilot.RevitShareAgregator.DataObserver
 {
     public class SearchResultsObserver : IObserver<ISearchResult>
     {

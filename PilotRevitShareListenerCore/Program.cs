@@ -8,7 +8,7 @@ namespace PilotRevitShareListenerCore
         {
             var servicesToRun = new ServiceBase[]
             {
-               // new ShareListenerService()
+                new ShareListenerService()
             };
             ServiceBase.Run(servicesToRun);
         }

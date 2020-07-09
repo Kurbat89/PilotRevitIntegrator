@@ -10,8 +10,8 @@ namespace Ascon.Pilot.RevitShareListener.Administrator
         private const string SERVICE_NAME = "PilotRvtShareListener";
         private const string SERVER_NAME = "Pilot-Server";
         private static string _appName;
-        private static RSLServiceController ServiceController = new RSLServiceController(SERVICE_NAME);
-        private static Dictionary<string, CommandParams> commands = new Dictionary<string, CommandParams>();
+        private static readonly RSLServiceController ServiceController = new RSLServiceController(SERVICE_NAME);
+        private static readonly Dictionary<string, CommandParams> Commands = new Dictionary<string, CommandParams>();
         private static Connector _connector;
 
         internal class CommandParams
@@ -33,9 +33,9 @@ namespace Ascon.Pilot.RevitShareListener.Administrator
                 if (args.GetLength(0) > 0)
                 {
                     args[0] = FixLetters(args[0].ToLower());
-                    if (commands.ContainsKey(args[0]))
+                    if (Commands.ContainsKey(args[0]))
                     {
-                        commands[args[0]].Function.Invoke(args);
+                        Commands[args[0]].Function.Invoke(args);
                         return;
                     }
                 }
@@ -52,11 +52,11 @@ namespace Ascon.Pilot.RevitShareListener.Administrator
             if (ServiceController.GetStatus() == "stopped")
                 StartService(null);
 
-            commands["--help"].Function.Invoke(new string[] { "--help" });
-            commands["--getPath"].Function.Invoke(new string[] { "--getPath" });
-            commands["--getDelay"].Function.Invoke(new string[] { "--getDelay" });
-            commands["--getLicenseCode"].Function.Invoke(new string[] { "--getLicenseCode" });
-            commands["--connection"].Function.Invoke(new string[] { "--connection" });
+            Commands["--help"].Function.Invoke(new string[] { "--help" });
+            Commands["--getPath"].Function.Invoke(new string[] { "--getPath" });
+            Commands["--getDelay"].Function.Invoke(new string[] { "--getDelay" });
+            Commands["--getLicenseCode"].Function.Invoke(new string[] { "--getLicenseCode" });
+            Commands["--connection"].Function.Invoke(new string[] { "--connection" });
         }
 
         private static string FixLetters(string arg)
@@ -83,89 +83,89 @@ namespace Ascon.Pilot.RevitShareListener.Administrator
 
         private static void RegisterCommands()
         {
-            commands["--help"] = new CommandParams()
+            Commands["--help"] = new CommandParams()
             {
                 Description = "help",
                 Function = PrintHelp
             };
 
-            commands["--version"] = new CommandParams()
+            Commands["--version"] = new CommandParams()
             {
                 Description = "show " + SERVICE_NAME + " service version",
                 Function = PrintVersion
             };
 
 
-            commands["--status"] = new CommandParams()
+            Commands["--status"] = new CommandParams()
             {
                 Description = "show " + SERVICE_NAME + " service status",
                 Function = PrintStatus
             };
 
 
-            commands["--start"] = new CommandParams()
+            Commands["--start"] = new CommandParams()
             {
                 Description = "start " + SERVICE_NAME + " service",
                 Function = StartService
             };
 
 
-            commands["--stop"] = new CommandParams()
+            Commands["--stop"] = new CommandParams()
             {
                 Description = "stop " + SERVICE_NAME + " service",
                 Function = StopService
             };
 
-            commands["--getLicenseCode"] = new CommandParams()
+            Commands["--getLicenseCode"] = new CommandParams()
             {
                 Description = "get code of license type",
                 Function = GetLicenseCode
             };
 
-            commands["--setLicenseCode"] = new CommandParams()
+            Commands["--setLicenseCode"] = new CommandParams()
             {
                 Description = "set code of license type",
                 Params = new List<string>() { "[license code]" },
                 Function = SetLicenseCode
             };
-            commands["--getPath"] = new CommandParams()
+            Commands["--getPath"] = new CommandParams()
             {
                 Description = "get Revit shared folder path",
                 Function = GetShareFolder
             };
 
-            commands["--setPath"] = new CommandParams()
+            Commands["--setPath"] = new CommandParams()
             {
                 Description = "set Revit shared folder path",
                 Params = new List<string>() { "[shared folder path]" },
                 Function = SetSharedFolder
             };
 
-            commands["--getDelay"] = new CommandParams()
+            Commands["--getDelay"] = new CommandParams()
             {
                 Description = "get delay in sending changes to " + SERVER_NAME,
                 Function = GetDelay
             };
 
-            commands["--setDelay"] = new CommandParams()
+            Commands["--setDelay"] = new CommandParams()
             {
                 Description = "set delay in mls",
                 Params = new List<string>() { "[delay]" },
                 Function = SetDelay
             };
 
-            commands["--connection"] = new CommandParams()
+            Commands["--connection"] = new CommandParams()
             {
                 Description = "check connection to " + SERVER_NAME,
                 Function = CheckConnection
             };
 
-            commands["--disconnect"] = new CommandParams()
+            Commands["--disconnect"] = new CommandParams()
             {
                 Description = "disconnect from " + SERVER_NAME,
                 Function = OnDisconnect
             };
-            commands["--connect"] = new CommandParams()
+            Commands["--connect"] = new CommandParams()
             {
                 Description = "connect to " + SERVER_NAME + " with new parameters",
                 Params = new List<string>() { "[database url]" },
@@ -200,7 +200,7 @@ namespace Ascon.Pilot.RevitShareListener.Administrator
             Console.WriteLine(SERVICE_NAME + " command-line client.");
             Console.WriteLine("Available commands:");
 
-            foreach (var command in commands)
+            foreach (var command in Commands)
             {
                 string commandDesc;
                 commandDesc = command.Key;

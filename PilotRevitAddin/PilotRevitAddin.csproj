@@ -64,7 +64,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PilotRibbon.cs" />
+    <Compile Include="ExternalApplication.cs" />
     <Compile Include="PrepareProjectCommandAvailability.cs" />
     <Compile Include="StartDesigningCommand.cs" />
     <Compile Include="PrepareProjectCommand.cs" />
@@ -74,12 +74,12 @@
     <Compile Include="UpdateSettingsCommandAvailability.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="PilotSync.addin">
+    <Content Include="Resources\PilotSync.addin">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <EmbeddedResource Include="updateSettingsIcon.png" />
-    <EmbeddedResource Include="startDesigningIcon.png" />
-    <EmbeddedResource Include="prepareIcon.png" />
+    <EmbeddedResource Include="Resources\updateSettingsIcon.png" />
+    <EmbeddedResource Include="Resources\startDesigningIcon.png" />
+    <EmbeddedResource Include="Resources\prepareIcon.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ascon.Pilot.SharedProject\Ascon.Pilot.SharedProject.csproj">
@@ -90,6 +90,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

@@ -10,9 +10,9 @@ namespace PilotRevitAddin
     [Transaction(TransactionMode.Manual)]
     [Regeneration(RegenerationOption.Manual)]
     [Journaling(JournalingMode.NoCommandData)]
-    public class PilotRibbon : IExternalApplication
+    public class ExternalApplication : IExternalApplication
     {
-        private static readonly string AddInPath = typeof(PilotRibbon).Assembly.Location;
+        private static readonly string AddInPath = typeof(ExternalApplication).Assembly.Location;
         private const string PilotIceTabName = "Pilot-ICE";
 
         public Result OnStartup(UIControlledApplication application)
@@ -69,7 +69,7 @@ namespace PilotRevitAddin
 
         private static BitmapImage NewBitmapImage(Assembly a, string imageName)
         {
-            var s = a.GetManifestResourceStream("PilotRevitAddin." + imageName);
+            var s = a.GetManifestResourceStream("PilotRevitAddin.Resources" + imageName);
             var img = new BitmapImage();
             img.BeginInit();
             img.StreamSource = s;

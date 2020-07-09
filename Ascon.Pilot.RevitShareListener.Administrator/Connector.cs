@@ -7,8 +7,8 @@ namespace Ascon.Pilot.RevitShareListener.Administrator
 {
     internal class Connector
     {
-        private string _pipeName;
-        private RSLServiceController _service;
+        private readonly string _pipeName;
+        private readonly RSLServiceController _service;
         public Connector(string pipeName, RSLServiceController service)
         {
             _pipeName = pipeName;

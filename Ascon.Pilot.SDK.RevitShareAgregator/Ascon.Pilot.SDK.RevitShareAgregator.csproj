@@ -7,8 +7,8 @@
     <ProjectGuid>{96F2DBCF-21E6-4EEC-B518-EEA30DE17E61}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Ascon.Pilot.SDK.RevitShareAgregator</RootNamespace>
-    <AssemblyName>Ascon.Pilot.SDK.RevitShareAgregator.ext</AssemblyName>
+    <RootNamespace>Ascon.Pilot.RevitShareAgregator</RootNamespace>
+    <AssemblyName>Ascon.Pilot.RevitShareAgregator.ext2</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile>
@@ -85,6 +85,7 @@
     <Compile Include="DataObserver\NotificationObjectObserver.cs" />
     <Compile Include="DataObserver\PersonalSettingsObserver.cs" />
     <Compile Include="DataObserver\SearchResultsObserver.cs" />
+    <Compile Include="Extensions\ObjectsRepositoryExtensions.cs" />
     <Compile Include="RevitShareAgregator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
@@ -94,10 +95,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Ascon.Pilot.SDK.Extensions\Ascon.Pilot.SDK.Extensions.csproj">
-      <Project>{1be77782-d574-4b8c-b77f-e7791fad51b7}</Project>
-      <Name>Ascon.Pilot.SDK.Extensions</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Ascon.Pilot.SharedProject\Ascon.Pilot.SharedProject.csproj">
       <Project>{4b3ada69-f7d8-41bd-b72c-32442406c72f}</Project>
       <Name>Ascon.Pilot.SharedProject</Name>

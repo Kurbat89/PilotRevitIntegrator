@@ -1,8 +1,4 @@
-﻿using Ascon.Pilot.SDK.Extensions;
-using Ascon.Pilot.SDK.RevitShareAgregator.DataObserver;
-using Ascon.Pilot.SharedProject;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.IO;
@@ -14,8 +10,14 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
 using System.Xml.Linq;
+using Ascon.Pilot.RevitShareAgregator.DataObserver;
+using Ascon.Pilot.RevitShareAgregator.Extensions;
+using Ascon.Pilot.SDK;
+using Ascon.Pilot.SharedProject;
+using Newtonsoft.Json;
+using IDataObject = Ascon.Pilot.SDK.IDataObject;
 
-namespace Ascon.Pilot.SDK.RevitShareAgregator
+namespace Ascon.Pilot.RevitShareAgregator
 {
     [Export(typeof(IDataPlugin))]
     public class RevitShareAgregator : IDataPlugin, IHandle<UnloadedEventArgs>
@@ -38,7 +40,7 @@ namespace Ascon.Pilot.SDK.RevitShareAgregator
             _currentPersonId = _repository.GetCurrentPerson().Id;
             _personalSettings = personalSettings;
             _eventAggregator = eventAggregator;
-            _personalSettings.SubscribeSetting(SettingsFeatureKeys.RevitAgregatorProjectPathKey)
+            _personalSettings.SubscribeSetting(SettingsFeatureKeys.RevitAggregatorProjectPathKey)
                 .Subscribe(new PersonalSettingsObserver(OnNext));
             _personalSettings.SubscribeSetting(SettingsFeatureKeys.RevitProjectInfoKey)
                 .Subscribe(new PersonalSettingsObserver(OnNext));
@@ -51,7 +53,7 @@ namespace Ascon.Pilot.SDK.RevitShareAgregator
 
         private void OnNext(KeyValuePair<string, string> value)
         {
-            if (value.Key == SettingsFeatureKeys.RevitAgregatorProjectPathKey)
+            if (value.Key == SettingsFeatureKeys.RevitAggregatorProjectPathKey)
             {
                 _sharePath = value.Value;
             }

@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Ascon.Pilot.SDK.RevitShareAgregator.DataObserver
+namespace Ascon.Pilot.RevitShareAgregator.DataObserver
 {
-
     public class PersonalSettingsObserver : IObserver<KeyValuePair<string, string>>
     {
         private readonly Action<KeyValuePair<string, string>> _action;
