@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Ascon.Pilot.DataClasses;
+using log4net;
+using System;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
-using Ascon.Pilot.DataClasses;
-using log4net;
 
 namespace PilotRevitShareListener.Server
 {
@@ -19,8 +19,8 @@ namespace PilotRevitShareListener.Server
         private readonly IObjectModifier _objectModifier;
         private readonly IServerConnector _connector;
 
-        public ObjectUploader( IObjectModifier objectModifier, IServerConnector connector)
-        { 
+        public ObjectUploader(IObjectModifier objectModifier, IServerConnector connector)
+        {
             _objectModifier = objectModifier;
             _connector = connector;
         }

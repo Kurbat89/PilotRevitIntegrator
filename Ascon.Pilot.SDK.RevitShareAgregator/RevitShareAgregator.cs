@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Ascon.Pilot.SDK.Extensions;
+using Ascon.Pilot.SDK.RevitShareAgregator.DataObserver;
+using Ascon.Pilot.SharedProject;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.IO;
@@ -10,9 +14,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
 using System.Xml.Linq;
-using Ascon.Pilot.SDK.Extensions;
-using Ascon.Pilot.SharedProject;
-using Newtonsoft.Json;
 
 namespace Ascon.Pilot.SDK.RevitShareAgregator
 {
@@ -20,6 +21,9 @@ namespace Ascon.Pilot.SDK.RevitShareAgregator
     public class RevitShareAgregator : IDataPlugin, IHandle<UnloadedEventArgs>
     {
         private readonly IObjectsRepository _repository;
+        private readonly IPersonalSettings _personalSettings;
+        private readonly IEventAggregator _eventAggregator;
+
         private readonly int _currentPersonId;
         private string _sharePath;
         private Dictionary<string, string> _revitProjectAttrsMap;
@@ -29,17 +33,35 @@ namespace Ascon.Pilot.SDK.RevitShareAgregator
 
         [ImportingConstructor]
         public RevitShareAgregator(IObjectsRepository repository, IPersonalSettings personalSettings, IEventAggregator eventAggregator)
-        {        
-            _repository = repository;            
+        {
+            _repository = repository;
             _currentPersonId = _repository.GetCurrentPerson().Id;
-            personalSettings.SubscribeSetting(SettingsFeatureKeys.RevitAgregatorProjectPathKey).Subscribe(p => _sharePath = p.Value);
-            personalSettings.SubscribeSetting(SettingsFeatureKeys.RevitProjectInfoKey).Subscribe(p => _revitProjectAttrsMap = GetRevitProjectAttrsMap(p.Value));
-            eventAggregator.Subscribe(this);
-            _repository.SubscribeNotification(NotificationKind.StorageObjectCreated).Subscribe(OnNext, OnError);
+            _personalSettings = personalSettings;
+            _eventAggregator = eventAggregator;
+            _personalSettings.SubscribeSetting(SettingsFeatureKeys.RevitAgregatorProjectPathKey)
+                .Subscribe(new PersonalSettingsObserver(OnNext));
+            _personalSettings.SubscribeSetting(SettingsFeatureKeys.RevitProjectInfoKey)
+                .Subscribe(new PersonalSettingsObserver(OnNext));
+            _eventAggregator.Subscribe(this);
+            _repository.SubscribeNotification(NotificationKind.StorageObjectCreated)
+                .Subscribe(new NotificationObjectObserver(OnNext));
             Task.Factory.StartNew(StartListeningUpdateSettingsCommand);
             Task.Factory.StartNew(StartListeningPrepareProjectCommand);
         }
-        public void OnNext(INotification notification)
+
+        private void OnNext(KeyValuePair<string, string> value)
+        {
+            if (value.Key == SettingsFeatureKeys.RevitAgregatorProjectPathKey)
+            {
+                _sharePath = value.Value;
+            }
+            else if (value.Key == SettingsFeatureKeys.RevitProjectInfoKey)
+            {
+                _revitProjectAttrsMap = GetRevitProjectAttrsMap(value.Value);
+            }
+        }
+
+        private void OnNext(INotification notification)
         {
             Dispatcher.CurrentDispatcher.BeginInvoke(new Action(() => HandleNotification(notification)));
         }
@@ -73,7 +95,7 @@ namespace Ascon.Pilot.SDK.RevitShareAgregator
                 var line = reader.ReadToEnd();
                 objId = new Guid(line);
             }
-            
+
             var serialisedProject = GetSerializedProject(_repository.GetStoragePath(objId), modelPath);
             var messageBytes = Encoding.UTF8.GetBytes(serialisedProject);
             namedPipeServer.Write(messageBytes, 0, messageBytes.Length);
@@ -134,7 +156,7 @@ namespace Ascon.Pilot.SDK.RevitShareAgregator
             var pathes = path.Split(Path.DirectorySeparatorChar);
             return path.Substring(0, pathes[0].Length + pathes[1].Length + 1);
         }
-        
+
         private static string ProcessSingleReceivedMessage(NamedPipeServerStream namedPipeServer)
         {
             var messageBuilder = new StringBuilder();
@@ -149,7 +171,7 @@ namespace Ascon.Pilot.SDK.RevitShareAgregator
             while (!namedPipeServer.IsMessageComplete);
             return messageBuilder.ToString();
         }
-        
+
         private void StartListeningUpdateSettingsCommand()
         {
             _updateSettingsPipeServer = new NamedPipeServerStream("PilotRevitAddinUpdateSettingsPipe",
@@ -206,7 +228,7 @@ namespace Ascon.Pilot.SDK.RevitShareAgregator
             {
             }
         }
-        
+
         public void Handle(UnloadedEventArgs message)
         {
             _updateSettingsPipeServer?.Close();
@@ -216,11 +238,6 @@ namespace Ascon.Pilot.SDK.RevitShareAgregator
         private IDataObject CreateNode(IDataObject dataObject)
         {
             return dataObject;
-        }
-
-        private void OnError(Exception obj)
-        {
-
         }
     }
 }

@@ -1,7 +1,7 @@
-﻿using System;
-using System.IO.Pipes;
-using Ascon.Pilot.SharedProject;
+﻿using Ascon.Pilot.SharedProject;
 using Newtonsoft.Json;
+using System;
+using System.IO.Pipes;
 
 namespace Ascon.Pilot.RevitShareListener.Administrator
 {
@@ -21,7 +21,7 @@ namespace Ascon.Pilot.RevitShareListener.Administrator
             {
                 if (_service.GetStatus() == "stopped")
                 {
-                    Console.WriteLine( "start service first");
+                    Console.WriteLine("start service first");
                     return;
                 }
 

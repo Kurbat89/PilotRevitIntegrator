@@ -1,8 +1,8 @@
-﻿using System;
-using System.IO;
-using Autodesk.Revit.Attributes;
+﻿using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System;
+using System.IO;
 
 namespace PilotRevitAddin
 {
@@ -17,7 +17,7 @@ namespace PilotRevitAddin
             var doc = uiApp.ActiveUIDocument.Document;
             var myDocsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             var filePath = Path.Combine(myDocsPath, doc.Title);
-          
+
             doc.SaveAs(GetSafeFilePath(filePath));
 
             return Result.Succeeded;

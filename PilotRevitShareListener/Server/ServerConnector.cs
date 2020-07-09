@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Ascon.Pilot.Server.Api;
+﻿using Ascon.Pilot.Server.Api;
 using Ascon.Pilot.Server.Api.Contracts;
 
 namespace PilotRevitShareListener.Server

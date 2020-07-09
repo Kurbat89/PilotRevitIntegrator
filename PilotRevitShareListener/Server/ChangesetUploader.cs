@@ -1,9 +1,9 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using Ascon.Pilot.DataClasses;
+﻿using Ascon.Pilot.DataClasses;
 using Ascon.Pilot.Server.Api.Contracts;
 using log4net;
+using System;
+using System.IO;
+using System.Linq;
 
 namespace PilotRevitShareListener.Server
 {
@@ -122,7 +122,8 @@ namespace PilotRevitShareListener.Server
                 pos += readBytes;
                 _uploaded += readBytes;
 
-                Logger.InfoFormat("Progress [{1}] of uploading file {0}", id, _uploaded);}
+                Logger.InfoFormat("Progress [{1}] of uploading file {0}", id, _uploaded);
+            }
         }
 
         // the last chunk will almost certainly not fill the buffer, so it must be trimmed before returning

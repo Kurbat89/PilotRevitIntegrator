@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Autodesk.Revit.Attributes;
+using Autodesk.Revit.UI;
+using System;
 using System.Reflection;
 using System.Windows.Media.Imaging;
-using Autodesk.Revit.Attributes;
-using Autodesk.Revit.UI;
 
 namespace PilotRevitAddin
 {

@@ -1,13 +1,11 @@
-﻿using log4net;
+﻿using Ascon.Pilot.SharedProject;
+using log4net;
 using Newtonsoft.Json;
+using PilotRevitShareListener.Server;
 using System;
 using System.IO.Pipes;
-using System.Threading;
 using System.Security.AccessControl;
 using System.Security.Principal;
-using PilotRevitShareListener.Server;
-using Ascon.Pilot.Common;
-using Ascon.Pilot.SharedProject;
 
 namespace PilotRevitShareListener
 {
@@ -16,17 +14,16 @@ namespace PilotRevitShareListener
         private readonly ILog _logger;
         private NamedPipeServerStream _pipe;
         private StreamString _pipeStream;
-        private Settings _settings;
+        private readonly Settings _settings;
         private RevitShareListener _revitShareListener;
-        private ReaderWriter _readerWriter;
-        private ConnectProvider _reconnectProvider;
-        private ObjectUploader _objectUploader;
-
-        private object threadLock = new object();
+        private readonly ReaderWriter _readerWriter;
+        private readonly ConnectProvider _reconnectProvider;
+        private readonly ObjectUploader _objectUploader;
+        private readonly object _threadLock = new object();
 
         private bool _isWaitingResponse;
 
-        public PipeServer(ILog logger, ReaderWriter readerWriter,ConnectProvider reconnectProvider, ObjectUploader objectUploader, RevitShareListener revitShareListener)
+        public PipeServer(ILog logger, ReaderWriter readerWriter, ConnectProvider reconnectProvider, ObjectUploader objectUploader, RevitShareListener revitShareListener)
         {
             _logger = logger;
             _settings = readerWriter.Settings;
@@ -47,9 +44,9 @@ namespace PilotRevitShareListener
             _pipe.BeginWaitForConnection(new AsyncCallback(WaitForConnectionCallBack), _pipe);
         }
 
-        public void SendToAdminClient(string message)
+        private void SendToAdminClient(string message)
         {
-            lock (threadLock)
+            lock (_threadLock)
             {
                 if (_isWaitingResponse && _pipeStream != null)
                 {
@@ -73,7 +70,7 @@ namespace PilotRevitShareListener
             _isWaitingResponse = true;
 
             _pipeStream = new StreamString(pipeServer);
-            var stringData = _pipeStream.ReadAnswer();        
+            var stringData = _pipeStream.ReadAnswer();
             var command = JsonConvert.DeserializeObject<PipeCommand>(stringData);
 
             string result;
@@ -87,7 +84,7 @@ namespace PilotRevitShareListener
                     SendToAdminClient("license code is " + _settings.LicenseCode);
                     break;
                 case "--setLicenseCode":
-                    result =  SetLicenseCode(command);
+                    result = SetLicenseCode(command);
                     SendToAdminClient(result);
                     break;
                 case "--getPath":
@@ -110,7 +107,7 @@ namespace PilotRevitShareListener
                     SendToAdminClient(result);
                     break;
                 case "--disconnect":
-                    result = Disconnect();  
+                    result = Disconnect();
                     SendToAdminClient(result);
                     break;
                 case "--connect":
@@ -136,9 +133,9 @@ namespace PilotRevitShareListener
             if (_settings.SharePath == "")
                 return "Revit shared folder path is not set";
 
-            if(_reconnectProvider.Reconnect(command))
-            { 
-                 if(_revitShareListener == null)
+            if (_reconnectProvider.Reconnect(command))
+            {
+                if (_revitShareListener == null)
                     CreateNewListener();
                 _readerWriter.Write();
                 return "connection is successful";

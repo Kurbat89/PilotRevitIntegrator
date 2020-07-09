@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Ascon.Pilot.SharedProject;
+using System;
 using System.Collections.Generic;
 using System.IO;
-using Ascon.Pilot.SharedProject;
 
 namespace Ascon.Pilot.RevitShareListener.Administrator
 {
@@ -40,7 +40,8 @@ namespace Ascon.Pilot.RevitShareListener.Administrator
                     }
                 }
                 OnNoParameters();
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
@@ -77,7 +78,7 @@ namespace Ascon.Pilot.RevitShareListener.Administrator
                 default:
                     return arg;
             }
-                
+
         }
 
         private static void RegisterCommands()
@@ -90,7 +91,7 @@ namespace Ascon.Pilot.RevitShareListener.Administrator
 
             commands["--version"] = new CommandParams()
             {
-                Description = "show "+SERVICE_NAME+" service version",
+                Description = "show " + SERVICE_NAME + " service version",
                 Function = PrintVersion
             };
 
@@ -111,7 +112,7 @@ namespace Ascon.Pilot.RevitShareListener.Administrator
 
             commands["--stop"] = new CommandParams()
             {
-                Description = "stop "+SERVICE_NAME+" service",
+                Description = "stop " + SERVICE_NAME + " service",
                 Function = StopService
             };
 
@@ -142,7 +143,7 @@ namespace Ascon.Pilot.RevitShareListener.Administrator
 
             commands["--getDelay"] = new CommandParams()
             {
-                Description = "get delay in sending changes to "+SERVER_NAME,
+                Description = "get delay in sending changes to " + SERVER_NAME,
                 Function = GetDelay
             };
 
@@ -155,7 +156,7 @@ namespace Ascon.Pilot.RevitShareListener.Administrator
 
             commands["--connection"] = new CommandParams()
             {
-                Description = "check connection to "+SERVER_NAME,
+                Description = "check connection to " + SERVER_NAME,
                 Function = CheckConnection
             };
 
@@ -166,7 +167,7 @@ namespace Ascon.Pilot.RevitShareListener.Administrator
             };
             commands["--connect"] = new CommandParams()
             {
-                Description = "connect to "+SERVER_NAME+" with new parameters",
+                Description = "connect to " + SERVER_NAME + " with new parameters",
                 Params = new List<string>() { "[database url]" },
                 Function = Connect
             };
@@ -196,7 +197,7 @@ namespace Ascon.Pilot.RevitShareListener.Administrator
         private static void PrintHelp(string[] args)
         {
             Console.WriteLine($"usage: {_appName} <command> [args]");
-            Console.WriteLine(SERVICE_NAME+" command-line client.");
+            Console.WriteLine(SERVICE_NAME + " command-line client.");
             Console.WriteLine("Available commands:");
 
             foreach (var command in commands)
@@ -215,7 +216,7 @@ namespace Ascon.Pilot.RevitShareListener.Administrator
 
         private static void GetShareFolder(string[] args)
         {
-     
+
             PipeCommand command = new PipeCommand();
             command.commandName = args[0];
             _connector.SendToServer(command);

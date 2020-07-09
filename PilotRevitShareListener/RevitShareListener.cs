@@ -1,9 +1,9 @@
-﻿using System;
+﻿using log4net;
+using PilotRevitShareListener.Server;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Timers;
-using log4net;
-using PilotRevitShareListener.Server;
 using Timer = System.Timers.Timer;
 
 namespace PilotRevitShareListener
@@ -140,7 +140,7 @@ namespace PilotRevitShareListener
             _timer.Elapsed += OnElapsedTimerChanged;
             _timer.Start();
         }
-        
+
         private void OnElapsedTimerChanged(object sender, ElapsedEventArgs elapsedEventArgs)
         {
             var copy = new HashSet<string>(_changedFileList);
