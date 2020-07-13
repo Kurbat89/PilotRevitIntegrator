@@ -24,7 +24,7 @@ namespace PilotRevitAddin.SynchronizeProject
 
         private void ShowDialogSynchronize(Document document)
         {
-            var viewModel = new SynchronizeViewViewModel(document);
+            var viewModel = new SynchronizeViewModel(document);
             var control = new SynchronizeView();
             var window = new PureWindow
             {
@@ -32,8 +32,8 @@ namespace PilotRevitAddin.SynchronizeProject
                 WindowStartupLocation = WindowStartupLocation.CenterScreen,
                 Content = control,
                 DataContext = viewModel,
-                Height = 700,
-                Width = 800,
+                Height = 450,
+                Width = 600,
                 CanClose = true,
                 ResizeMode = ResizeMode.NoResize
             };

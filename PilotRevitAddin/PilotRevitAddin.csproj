@@ -88,7 +88,7 @@
     <Compile Include="SynchronizeProject\SynchronizeView.xaml.cs">
       <DependentUpon>SynchronizeView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SynchronizeProject\SynchronizeViewViewModel.cs" />
+    <Compile Include="SynchronizeProject\SynchronizeViewModel.cs" />
     <Compile Include="SynchronizeProject\WithCentralOptionsModel.cs" />
     <Compile Include="TempTestCommand.cs" />
     <Compile Include="UpdateProjectSettingsCommand.cs" />
@@ -108,6 +108,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Resources\SynchronizeSettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Page Include="SynchronizeProject\SynchronizeView.xaml">

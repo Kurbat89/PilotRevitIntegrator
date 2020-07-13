@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PilotRevitAddin.SynchronizeProject
+﻿namespace PilotRevitAddin.SynchronizeProject
 {
     class WithCentralOptionsModel
     {
-
+        public string Comment { get; set; }
+        public bool Compact { get; set; }
+        public bool SaveLocalAfter { get; set; }
+        public bool SaveLocalBefore { get; set; }
     }
 }

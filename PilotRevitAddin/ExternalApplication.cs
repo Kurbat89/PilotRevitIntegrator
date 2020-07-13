@@ -74,6 +74,7 @@ namespace PilotRevitAddin
                 return;
             
             document.SaveAs(StartDesigning.GetSafeFilePath(document));
+            document.ReloadLatest(new ReloadLatestOptions());
         }
 
         public Result OnShutdown(UIControlledApplication application)

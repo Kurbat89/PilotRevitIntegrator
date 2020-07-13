@@ -83,6 +83,7 @@ namespace PilotRevitAddin
 
             var relinquishOptions = new RelinquishOptions(true);
             relinquishOptions.CheckedOutElements = false;
+        //  relinquishOptions.
 
             var options = new SynchronizeWithCentralOptions()
             {
@@ -92,12 +93,17 @@ namespace PilotRevitAddin
                 SaveLocalBefore = true,
             };
 
-            options.SetRelinquishOptions(relinquishOptions);
-            
-            var transaction = new TransactWithCentralOptions();
-            
-            document.SynchronizeWithCentral(transaction, options);
+      //      var tt = document.GetCloudModelPath();
+           // var tt2 = document.GetWorksharingCentralModelPath();
 
+            //options.SetRelinquishOptions(relinquishOptions);
+
+            //var transaction = new TransactWithCentralOptions();
+
+            //document.ReloadLatest();
+
+            //document.SynchronizeWithCentral(transaction, options);
+            //ReloadLatestWithMessage(document);
             //document.SynchronizeWithCentral(new TransactWithCentralOptions(), new SynchronizeWithCentralOptions()
             //{
             //    Comment = "Test",
@@ -107,7 +113,31 @@ namespace PilotRevitAddin
             //});
 
 
+           // document.Application.SetLibraryPaths();
             return Result.Succeeded;
+        }
+
+        public static void ReloadLatestWithMessage(Document doc)
+        {
+            // Tell user what we're doing
+            TaskDialog td = new TaskDialog("Alert");
+            td.MainInstruction = "Application 'Automatic element creator' needs to reload changes from central in order to proceed.";
+            td.MainContent = "This will update your local with all changes currently in the central model.  This operation " +
+                             "may take some time depending on the number of changes available on the central.";
+            td.CommonButtons = TaskDialogCommonButtons.Ok | TaskDialogCommonButtons.Cancel;
+
+            TaskDialogResult result = td.Show();
+
+            if (result == TaskDialogResult.Ok)
+            {
+                // There are no currently customizable user options for ReloadLatest.
+                doc.ReloadLatest(new ReloadLatestOptions());
+                TaskDialog.Show("Proceeding...", "Reload operation completed, proceeding with updates.");
+            }
+            else
+            {
+                TaskDialog.Show("Canceled.", "Reload operation canceled, so changes will not be made.  Return to this command later when ready to reload.");
+            }
         }
     }
 }
