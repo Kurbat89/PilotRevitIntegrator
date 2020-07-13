@@ -1,8 +1,11 @@
 ﻿using Autodesk.Revit.Attributes;
 using Autodesk.Revit.UI;
 using System;
+using System.Linq;
 using System.Reflection;
+using System.Windows;
 using System.Windows.Media.Imaging;
+using Autodesk.Revit.DB;
 
 namespace PilotRevitAddin
 {
@@ -31,6 +34,8 @@ namespace PilotRevitAddin
 
         private void CreatePilotTab(UIControlledApplication application)
         {
+            application.ControlledApplication.DocumentOpened += ControlledApplication_DocumentOpened;
+
             application.CreateRibbonTab(PilotIceTabName);
             var pilotRibbon = application.CreateRibbonPanel(PilotIceTabName, "Панель команд Pilot-ICE");
             var prepareButton = new PushButtonData("PrepareButton", "Подготовить проект", AddInPath,
@@ -62,6 +67,15 @@ namespace PilotRevitAddin
             pilotRibbon.AddItem(updateProjectSettingsButton);
         }
 
+        private void ControlledApplication_DocumentOpened(object sender, Autodesk.Revit.DB.Events.DocumentOpenedEventArgs e)
+        {
+            var document = e.Document;
+            if (!StartDesigning.IsProjectReady(document))
+                return;
+            
+            document.SaveAs(StartDesigning.GetSafeFilePath(document));
+        }
+
         public Result OnShutdown(UIControlledApplication application)
         {
             return Result.Succeeded;
@@ -69,7 +83,7 @@ namespace PilotRevitAddin
 
         private static BitmapImage NewBitmapImage(Assembly a, string imageName)
         {
-            var s = a.GetManifestResourceStream("PilotRevitAddin.Resources" + imageName);
+            var s = a.GetManifestResourceStream("PilotRevitAddin.Resources." + imageName);
             var img = new BitmapImage();
             img.BeginInit();
             img.StreamSource = s;
