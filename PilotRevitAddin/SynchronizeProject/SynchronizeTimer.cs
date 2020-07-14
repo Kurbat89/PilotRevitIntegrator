@@ -9,7 +9,7 @@ namespace PilotRevitAddin.SynchronizeProject
 {
     class SynchronizeTimer
     {
-        private readonly SynchronizeSettingsWatcher _synchronizeWatcher = new SynchronizeSettingsWatcher();
+        private static readonly SynchronizeSettingsWatcher _synchronizeWatcher = new SynchronizeSettingsWatcher();
         private Timer _timer;
 
         public bool SynchronizeFlag;
@@ -37,7 +37,8 @@ namespace PilotRevitAddin.SynchronizeProject
 
                 _timer?.Dispose();
 
-                _timer = new Timer(timeCB, null, settings.SelectTimeIntervals * 60000, settings.SelectTimeIntervals * 60000);
+                _timer = new Timer(timeCB, null, 30000, 30000);
+               // _timer = new Timer(timeCB, null, settings.SelectTimeIntervals * 60000, settings.SelectTimeIntervals * 60000);
             }
             else
             {

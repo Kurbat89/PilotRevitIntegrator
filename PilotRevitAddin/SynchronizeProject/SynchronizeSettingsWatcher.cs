@@ -73,25 +73,23 @@ namespace PilotRevitAddin.SynchronizeProject
             }
             return false;
         }
-
+      
         private void StartListener()
         {
             var path = Path.GetDirectoryName(SettingsPath.SynchronizeSettingsPath);
 
-            using (FileSystemWatcher watcher = new FileSystemWatcher(path))
-            {
-                watcher.Filter = "*.json";
+            FileSystemWatcher watcher = new FileSystemWatcher(path);
+            watcher.Filter = "*.json";
 
-                watcher.Changed += OnChanged;
+            watcher.Changed += OnChanged;
 
-                watcher.NotifyFilter = NotifyFilters.LastAccess
-                                       | NotifyFilters.LastWrite
-                                       | NotifyFilters.FileName
-                                       | NotifyFilters.DirectoryName;
+            watcher.NotifyFilter = NotifyFilters.LastAccess
+                                   | NotifyFilters.LastWrite
+                                   | NotifyFilters.FileName
+                                   | NotifyFilters.DirectoryName;
 
-                watcher.EnableRaisingEvents = true;
-                watcher.WaitForChanged(WatcherChangeTypes.All);
-            }
+            watcher.EnableRaisingEvents = true;
+            watcher.WaitForChanged(WatcherChangeTypes.All);
         }
 
         private void OnChanged(object sender, FileSystemEventArgs e)

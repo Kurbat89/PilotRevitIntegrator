@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Autodesk.Revit.DB;
+﻿using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
 namespace PilotRevitAddin.SynchronizeProject
@@ -12,7 +7,7 @@ namespace PilotRevitAddin.SynchronizeProject
     {
         public bool IsCommandAvailable(UIApplication applicationData, CategorySet selectedCategories)
         {
-            return StartDesigning.IsProjectReady(applicationData.ActiveUIDocument.Document);
+            return applicationData.ActiveUIDocument.Document.IsWorkshared;
         }
     }
 }
