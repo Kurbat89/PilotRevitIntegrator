@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using Autodesk.Revit.DB;
+using PilotRevitAddin.Utils;
 
 namespace PilotRevitAddin
 {
@@ -43,7 +44,7 @@ namespace PilotRevitAddin
                 "PilotRevitAddin.PrepareProjectCommand")
             {
                 ToolTip = "Подготовить проект для совместной работы",
-                LargeImage = NewBitmapImage(Assembly.GetExecutingAssembly(), "prepareIcon.png"),
+                LargeImage = ImageUtils.NewBitmapImage(Assembly.GetExecutingAssembly(), "prepareIcon.png"),
                 AvailabilityClassName = "PilotRevitAddin.PrepareProjectCommandAvailability"
             };
 
@@ -51,7 +52,7 @@ namespace PilotRevitAddin
                 "PilotRevitAddin.StartDesigningCommand")
             {
                 ToolTip = "Начать проектирование в режиме совместной работы",
-                LargeImage = NewBitmapImage(Assembly.GetExecutingAssembly(), "startDesigningIcon.png"),
+                LargeImage = ImageUtils.NewBitmapImage(Assembly.GetExecutingAssembly(), "startDesigningIcon.png"),
                 AvailabilityClassName = "PilotRevitAddin.StartDesigningCommandAvailability"
             };
 
@@ -59,13 +60,22 @@ namespace PilotRevitAddin
               "PilotRevitAddin.UpdateProjectSettingsCommand")
             {
                 ToolTip = "Обновить настройки проекта",
-                LargeImage = NewBitmapImage(Assembly.GetExecutingAssembly(), "updateSettingsIcon.png"),
+                LargeImage = ImageUtils.NewBitmapImage(Assembly.GetExecutingAssembly(), "updateSettingsIcon.png"),
                 AvailabilityClassName = "PilotRevitAddin.UpdateSettingsCommandAvailability"
+            };
+
+            var synchronizeProjectButton = new PushButtonData("SynchronizeProjectButton", "Настройки синхронизации", AddInPath,
+                "PilotRevitAddin.SynchronizeProject.SynchronizeCommand")
+            {
+                ToolTip = "Обновить настройки автоматической синхронизации",
+                LargeImage = ImageUtils.NewBitmapImage(Assembly.GetExecutingAssembly(), "synchronizeIcon.png"),
+                AvailabilityClassName = "PilotRevitAddin.SynchronizeProject.SynchronizeAvailability"
             };
 
             pilotRibbon.AddItem(prepareButton);
             pilotRibbon.AddItem(startButton);
             pilotRibbon.AddItem(updateProjectSettingsButton);
+            pilotRibbon.AddItem(synchronizeProjectButton);
         }
 
         private void Application_Idling(object sender, Autodesk.Revit.UI.Events.IdlingEventArgs e)
@@ -86,16 +96,6 @@ namespace PilotRevitAddin
         public Result OnShutdown(UIControlledApplication application)
         {
             return Result.Succeeded;
-        }
-
-        private static BitmapImage NewBitmapImage(Assembly a, string imageName)
-        {
-            var s = a.GetManifestResourceStream("PilotRevitAddin.Resources." + imageName);
-            var img = new BitmapImage();
-            img.BeginInit();
-            img.StreamSource = s;
-            img.EndInit();
-            return img;
         }
     }
 }

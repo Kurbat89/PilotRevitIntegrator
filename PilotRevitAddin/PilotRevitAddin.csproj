@@ -84,6 +84,7 @@
     <Compile Include="StartDesigningCommandAvailability.cs" />
     <Compile Include="SynchronizeProject\RelinquishOptionsModel.cs" />
     <Compile Include="SynchronizeProject\SettingsPath.cs" />
+    <Compile Include="SynchronizeProject\SynchronizeAvailability.cs" />
     <Compile Include="SynchronizeProject\SynchronizeCommand.cs" />
     <Compile Include="SynchronizeProject\SynchronizeModel.cs" />
     <Compile Include="SynchronizeProject\SynchronizeSettingsWatcher.cs" />
@@ -96,6 +97,7 @@
     <Compile Include="TempTestCommand.cs" />
     <Compile Include="UpdateProjectSettingsCommand.cs" />
     <Compile Include="UpdateSettingsCommandAvailability.cs" />
+    <Compile Include="Utils\ImageUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\PilotSync.addin" />
@@ -124,6 +126,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\synchronizeIcon.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
