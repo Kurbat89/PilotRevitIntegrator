@@ -94,7 +94,6 @@
     </Compile>
     <Compile Include="SynchronizeProject\SynchronizeViewModel.cs" />
     <Compile Include="SynchronizeProject\WithCentralOptionsModel.cs" />
-    <Compile Include="TempTestCommand.cs" />
     <Compile Include="UpdateProjectSettingsCommand.cs" />
     <Compile Include="UpdateSettingsCommandAvailability.cs" />
     <Compile Include="Utils\ImageUtils.cs" />

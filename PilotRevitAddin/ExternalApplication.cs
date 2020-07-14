@@ -1,13 +1,10 @@
 ﻿using Autodesk.Revit.Attributes;
-using Autodesk.Revit.UI;
-using System;
-using System.Linq;
-using System.Reflection;
-using System.Windows;
-using System.Windows.Media.Imaging;
 using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 using PilotRevitAddin.SynchronizeProject;
 using PilotRevitAddin.Utils;
+using System;
+using System.Reflection;
 
 namespace PilotRevitAddin
 {
@@ -94,7 +91,7 @@ namespace PilotRevitAddin
                 return;
 
             if (!_synchronizeTimer.SynchronizeFlag) return;
-            
+
             _synchronizeTimer.SynchronizeFlag = false;
             var settings = _synchronizeTimer.GetSettings();
 
@@ -132,7 +129,7 @@ namespace PilotRevitAddin
             var document = e.Document;
             if (!StartDesigning.IsProjectReady(document))
                 return;
-            
+
             document.SaveAs(StartDesigning.GetSafeFilePath(document));
             document.ReloadLatest(new ReloadLatestOptions());
         }

@@ -1,8 +1,6 @@
 ﻿using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using System;
-using System.IO;
 
 namespace PilotRevitAddin
 {
@@ -15,7 +13,7 @@ namespace PilotRevitAddin
         {
             var uiApp = commandData.Application;
             var doc = uiApp.ActiveUIDocument.Document;
-           
+
             doc.SaveAs(StartDesigning.GetSafeFilePath(doc));
 
             return Result.Succeeded;

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Threading;
 
 namespace PilotRevitAddin.SynchronizeProject
 {
@@ -37,8 +32,7 @@ namespace PilotRevitAddin.SynchronizeProject
 
                 _timer?.Dispose();
 
-                _timer = new Timer(timeCB, null, 30000, 30000);
-               // _timer = new Timer(timeCB, null, settings.SelectTimeIntervals * 60000, settings.SelectTimeIntervals * 60000);
+                _timer = new Timer(timeCB, null, settings.SelectTimeIntervals, settings.SelectTimeIntervals);
             }
             else
             {

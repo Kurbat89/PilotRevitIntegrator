@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using Ascon.Pilot.Theme.Controls;
+﻿using Ascon.Pilot.Theme.Controls;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System.Windows;
 
 namespace PilotRevitAddin.SynchronizeProject
 {
@@ -23,7 +18,7 @@ namespace PilotRevitAddin.SynchronizeProject
 
             return Result.Succeeded;
         }
-     
+
         private void ShowDialogSynchronize(Document document)
         {
             var viewModel = new SynchronizeViewModel(document);

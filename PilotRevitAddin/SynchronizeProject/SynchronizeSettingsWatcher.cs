@@ -1,23 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Newtonsoft.Json;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 
 namespace PilotRevitAddin.SynchronizeProject
 {
     class SynchronizeSettingsWatcher
     {
         public delegate void SettingsChanged(SynchronizeModel settings);
-        public  event SettingsChanged SettingsChangedEvent;
+        public event SettingsChanged SettingsChangedEvent;
 
         private SynchronizeModel _settings;
-        public  SynchronizeModel Settings
+        public SynchronizeModel Settings
         {
-            get =>_settings;
+            get => _settings;
             set
             {
                 _settings = value;
@@ -73,7 +69,7 @@ namespace PilotRevitAddin.SynchronizeProject
             }
             return false;
         }
-      
+
         private void StartListener()
         {
             var path = Path.GetDirectoryName(SettingsPath.SynchronizeSettingsPath);

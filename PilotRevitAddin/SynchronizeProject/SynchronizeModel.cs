@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using PilotRevitAddin.CommandsPrism;
+using System.Collections.Generic;
 
 namespace PilotRevitAddin.SynchronizeProject
 {
@@ -20,9 +16,9 @@ namespace PilotRevitAddin.SynchronizeProject
         public int SelectTimeIntervals { get; set; } = 5;
 
         public string CentralModelPath { get; set; }
-        
+
         [JsonIgnore]
-        public List<int> TimeIntervals { get; set; } = new List<int>() { 5,10,15,20,30,60,120,180,240,300 };
+        public List<int> TimeIntervals { get; set; } = new List<int>() { 5, 10, 15, 20, 30, 60, 120, 180, 240, 300 };
 
         public SynchronizeModel()
         {

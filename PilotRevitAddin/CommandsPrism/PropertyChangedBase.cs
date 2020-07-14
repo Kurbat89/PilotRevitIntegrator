@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Newtonsoft.Json;
 
 namespace PilotRevitAddin.CommandsPrism
 {

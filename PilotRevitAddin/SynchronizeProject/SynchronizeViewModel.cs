@@ -1,11 +1,8 @@
-﻿using System;
-using System.IO;
-using System.Reflection;
-using System.Windows.Input;
-using Ascon.Pilot.Theme.Tools;
-using Autodesk.Revit.DB;
+﻿using Autodesk.Revit.DB;
 using Newtonsoft.Json;
 using PilotRevitAddin.CommandsPrism;
+using System.IO;
+using System.Windows.Input;
 
 namespace PilotRevitAddin.SynchronizeProject
 {
@@ -61,7 +58,7 @@ namespace PilotRevitAddin.SynchronizeProject
         {
             get
             {
-                return _cancelCommand ?? (_cancelCommand = new CommandLight(obj => { base.CloseView(true);}));
+                return _cancelCommand ?? (_cancelCommand = new CommandLight(obj => { base.CloseView(true); }));
             }
         }
     }
