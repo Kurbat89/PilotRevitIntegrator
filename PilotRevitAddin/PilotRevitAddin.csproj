@@ -87,6 +87,7 @@
     <Compile Include="SynchronizeProject\SynchronizeCommand.cs" />
     <Compile Include="SynchronizeProject\SynchronizeModel.cs" />
     <Compile Include="SynchronizeProject\SynchronizeSettingsWatcher.cs" />
+    <Compile Include="SynchronizeProject\SynchronizeTimer.cs" />
     <Compile Include="SynchronizeProject\SynchronizeView.xaml.cs">
       <DependentUpon>SynchronizeView.xaml</DependentUpon>
     </Compile>
@@ -120,7 +121,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\synchronizeIcon.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

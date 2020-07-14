@@ -15,24 +15,54 @@ namespace PilotRevitAddin.SynchronizeProject
     [Regeneration(RegenerationOption.Manual)]
     class SynchronizeCommand : IExternalCommand
     {
-        public static SynchronizeSettingsWatcher Test = new SynchronizeSettingsWatcher();
+        private readonly SynchronizeTimer _synchronizeTimer = new SynchronizeTimer();
 
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var doc = commandData.Application.ActiveUIDocument.Document;
-
+            commandData.Application.Idling += Application_Idling;
 
             ShowDialogSynchronize(doc);
-
-            commandData.Application.Idling += Application_Idling;
 
             return Result.Succeeded;
         }
 
         private void Application_Idling(object sender, Autodesk.Revit.UI.Events.IdlingEventArgs e)
         {
+            if (_synchronizeTimer.SynchronizeFlag)
+            {
+                _synchronizeTimer.SynchronizeFlag = false;
+                var uiApp = (UIApplication)sender;
+                var settings = _synchronizeTimer.GetSettings();
 
+                var document = uiApp.ActiveUIDocument.Document;
 
+                var centralOption = GetCentralOptions(settings);
+                
+                document.SynchronizeWithCentral(new TransactWithCentralOptions(), centralOption);
+            }
+        }
+
+        private SynchronizeWithCentralOptions GetCentralOptions(SynchronizeModel settings)
+        {
+            var relinquishOptions = new RelinquishOptions(false);
+            relinquishOptions.UserWorksets = settings.RelinquishModel.UserWorksets;
+            relinquishOptions.ViewWorksets = settings.RelinquishModel.ViewWorksets;
+            relinquishOptions.StandardWorksets = settings.RelinquishModel.StandardWorksets;
+            relinquishOptions.CheckedOutElements = settings.RelinquishModel.CheckedOutElements;
+            relinquishOptions.FamilyWorksets = settings.RelinquishModel.FamilyWorkset;
+
+            var options = new SynchronizeWithCentralOptions()
+            {
+                SaveLocalBefore = settings.WithCentralModel.SaveLocalBefore,
+                Compact = settings.WithCentralModel.Compact,
+                Comment = settings.WithCentralModel.Comment,
+                SaveLocalAfter = settings.WithCentralModel.SaveLocalAfter
+            };
+
+            options.SetRelinquishOptions(relinquishOptions);
+
+            return options;
         }
 
         private void ShowDialogSynchronize(Document document)

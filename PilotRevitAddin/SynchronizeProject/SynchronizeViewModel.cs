@@ -38,11 +38,12 @@ namespace PilotRevitAddin.SynchronizeProject
         private void Save()
         {
             var jsonValue = JsonConvert.SerializeObject(Synchronize, Formatting.Indented);
-           
+
             using (var sr = new StreamWriter(SettingsPath.SynchronizeSettingsPath))
             {
                 sr.Write(jsonValue);
             }
+
         }
 
         private ICommand _okCommand;
