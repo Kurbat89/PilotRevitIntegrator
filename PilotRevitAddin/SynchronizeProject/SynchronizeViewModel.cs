@@ -29,8 +29,7 @@ namespace PilotRevitAddin.SynchronizeProject
 
         private string Load()
         {
-            var path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"Resources\SynchronizeSettings.json");
-            using (var sr = new StreamReader(path))
+            using (var sr = new StreamReader(SettingsPath.SynchronizeSettingsPath))
             {
                 return sr.ReadToEnd();
             }
@@ -39,9 +38,8 @@ namespace PilotRevitAddin.SynchronizeProject
         private void Save()
         {
             var jsonValue = JsonConvert.SerializeObject(Synchronize, Formatting.Indented);
-
-            var path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"Resources\SynchronizeSettings.json");
-            using (var sr = new StreamWriter(path))
+           
+            using (var sr = new StreamWriter(SettingsPath.SynchronizeSettingsPath))
             {
                 sr.Write(jsonValue);
             }

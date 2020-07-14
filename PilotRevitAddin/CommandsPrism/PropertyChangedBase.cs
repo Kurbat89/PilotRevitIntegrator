@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Newtonsoft.Json;
 
 namespace PilotRevitAddin.CommandsPrism
 {
@@ -10,6 +11,7 @@ namespace PilotRevitAddin.CommandsPrism
 
         private bool? _closeResult;
 
+        [JsonIgnore]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? CloseResult
         {

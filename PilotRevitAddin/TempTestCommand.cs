@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using PilotRevitAddin.SynchronizeProject;
 
 namespace PilotRevitAddin
 {
@@ -13,6 +15,9 @@ namespace PilotRevitAddin
     [Regeneration(RegenerationOption.Manual)]
     class TempTestCommand : IExternalCommand
     {
+
+        public static SynchronizeSettingsWatcher test;
+        
         public void GetElementWorksharingInfo(Document doc, Element elem)
         {
             String message = String.Empty;
@@ -111,8 +116,9 @@ namespace PilotRevitAddin
             //    SaveLocalAfter = true,
             //    SaveLocalBefore = true,
             //});
-
-
+            var tt = SettingsPath.SynchronizeSettingsPath;
+            Clipboard.SetText(tt);
+            test = new SynchronizeSettingsWatcher();
            // document.Application.SetLibraryPaths();
             return Result.Succeeded;
         }

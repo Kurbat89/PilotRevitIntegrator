@@ -83,8 +83,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StartDesigningCommandAvailability.cs" />
     <Compile Include="SynchronizeProject\RelinquishOptionsModel.cs" />
+    <Compile Include="SynchronizeProject\SettingsPath.cs" />
     <Compile Include="SynchronizeProject\SynchronizeCommand.cs" />
     <Compile Include="SynchronizeProject\SynchronizeModel.cs" />
+    <Compile Include="SynchronizeProject\SynchronizeSettingsWatcher.cs" />
     <Compile Include="SynchronizeProject\SynchronizeView.xaml.cs">
       <DependentUpon>SynchronizeView.xaml</DependentUpon>
     </Compile>

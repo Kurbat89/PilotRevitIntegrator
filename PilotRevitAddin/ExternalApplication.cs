@@ -35,6 +35,7 @@ namespace PilotRevitAddin
         private void CreatePilotTab(UIControlledApplication application)
         {
             application.ControlledApplication.DocumentOpened += ControlledApplication_DocumentOpened;
+            application.Idling += Application_Idling;
 
             application.CreateRibbonTab(PilotIceTabName);
             var pilotRibbon = application.CreateRibbonPanel(PilotIceTabName, "Панель команд Pilot-ICE");
@@ -65,6 +66,11 @@ namespace PilotRevitAddin
             pilotRibbon.AddItem(prepareButton);
             pilotRibbon.AddItem(startButton);
             pilotRibbon.AddItem(updateProjectSettingsButton);
+        }
+
+        private void Application_Idling(object sender, Autodesk.Revit.UI.Events.IdlingEventArgs e)
+        {
+
         }
 
         private void ControlledApplication_DocumentOpened(object sender, Autodesk.Revit.DB.Events.DocumentOpenedEventArgs e)

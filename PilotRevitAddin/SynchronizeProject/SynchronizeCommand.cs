@@ -15,11 +15,24 @@ namespace PilotRevitAddin.SynchronizeProject
     [Regeneration(RegenerationOption.Manual)]
     class SynchronizeCommand : IExternalCommand
     {
+        public static SynchronizeSettingsWatcher Test = new SynchronizeSettingsWatcher();
+
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            ShowDialogSynchronize(commandData.Application.ActiveUIDocument.Document);
+            var doc = commandData.Application.ActiveUIDocument.Document;
+
+
+            ShowDialogSynchronize(doc);
+
+            commandData.Application.Idling += Application_Idling;
 
             return Result.Succeeded;
+        }
+
+        private void Application_Idling(object sender, Autodesk.Revit.UI.Events.IdlingEventArgs e)
+        {
+
+
         }
 
         private void ShowDialogSynchronize(Document document)
