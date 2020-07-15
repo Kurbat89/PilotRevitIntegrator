@@ -1,0 +1,18 @@
+{
+  "SyncOn": true,
+  "SelectTimeIntervals": 20,
+  "WithCentralModel": {
+    "Comment": "Test",
+    "Compact": false,
+    "SaveLocalAfter": true,
+    "SaveLocalBefore": true
+  },
+  "RelinquishModel": {
+    "CheckedOutElements": true,
+    "FamilyWorkset": false,
+    "StandardWorksets": false,
+    "UserWorksets": false,
+    "ViewWorksets": false
+  },
+  "CloseResult": null
+}

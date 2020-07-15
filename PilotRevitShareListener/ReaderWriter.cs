@@ -1,7 +1,6 @@
-﻿using System.IO;
-using System.Reflection;
+﻿using Ascon.Pilot.Common;
+using System.IO;
 using System.Xml.Serialization;
-using Ascon.Pilot.Common;
 
 namespace PilotRevitShareListener
 {
@@ -16,7 +15,7 @@ namespace PilotRevitShareListener
         }
 
         public Settings Settings { get; set; }
-       
+
 
         public void Write()
         {
@@ -38,7 +37,8 @@ namespace PilotRevitShareListener
                     Settings = (Settings)serializer.Deserialize(reader);
                 if (Settings != null)
                     Settings.Password = Settings.Password.EncryptAes();
-            }catch(FileNotFoundException)
+            }
+            catch (FileNotFoundException)
             {
                 Settings = new Settings();
                 Settings.LicenseCode = 100;

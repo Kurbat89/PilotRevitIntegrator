@@ -1,14 +1,14 @@
-﻿using System;
-using System.IO.Pipes;
-using Ascon.Pilot.SharedProject;
+﻿using Ascon.Pilot.SharedProject;
 using Newtonsoft.Json;
+using System;
+using System.IO.Pipes;
 
 namespace Ascon.Pilot.RevitShareListener.Administrator
 {
     internal class Connector
     {
-        private string _pipeName;
-        private RSLServiceController _service;
+        private readonly string _pipeName;
+        private readonly RSLServiceController _service;
         public Connector(string pipeName, RSLServiceController service)
         {
             _pipeName = pipeName;
@@ -21,7 +21,7 @@ namespace Ascon.Pilot.RevitShareListener.Administrator
             {
                 if (_service.GetStatus() == "stopped")
                 {
-                    Console.WriteLine( "start service first");
+                    Console.WriteLine("start service first");
                     return;
                 }
 

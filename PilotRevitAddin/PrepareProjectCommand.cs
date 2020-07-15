@@ -1,13 +1,12 @@
-﻿using System.IO;
-using System.IO.Pipes;
-using System.Text;
+﻿using Ascon.Pilot.SharedProject;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Microsoft.Win32;
 using Newtonsoft.Json;
-using Ascon.Pilot.SharedProject;
 using System;
+using System.IO;
+using System.IO.Pipes;
 
 namespace PilotRevitAddin
 {

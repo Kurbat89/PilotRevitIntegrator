@@ -1,10 +1,10 @@
-﻿using System;
+﻿using log4net;
+using PilotRevitShareListener.Server;
+using System;
 using System.IO;
 using System.Runtime.ExceptionServices;
 using System.ServiceProcess;
 using System.Threading.Tasks;
-using log4net;
-using PilotRevitShareListener.Server;
 
 namespace PilotRevitShareListener
 {
@@ -34,21 +34,21 @@ namespace PilotRevitShareListener
                 _serverConnector = new ServerConnector(_settings);
 
                 var objectModifier = new ObjectModifier(_serverConnector);
-                _objectUploader = new ObjectUploader( objectModifier, _serverConnector);
+                _objectUploader = new ObjectUploader(objectModifier, _serverConnector);
 
                 _connectProvider = new ConnectProvider(_logger, _settings, _serverConnector);
                 _connectProvider.Connect();
 
                 _revitShareListener = new RevitShareListener(_objectUploader, _settings);
-                
-                _pipeServer = new PipeServer(_logger, readerWriter,_connectProvider,_objectUploader, _revitShareListener);
+
+                _pipeServer = new PipeServer(_logger, readerWriter, _connectProvider, _objectUploader, _revitShareListener);
                 _pipeServer.Start();
 
                 _logger.InfoFormat("{0} Started Successfully", ServiceName);
             }
             catch (Exception)//in case of incorrect settings.xml 
             {
-                _pipeServer = new PipeServer(_logger, readerWriter, _connectProvider, _objectUploader ,null);
+                _pipeServer = new PipeServer(_logger, readerWriter, _connectProvider, _objectUploader, null);
                 _pipeServer.Start();
             }
         }
@@ -56,12 +56,15 @@ namespace PilotRevitShareListener
         protected override void OnStart(string[] args)
         {
             _logger = LogManager.GetLogger(typeof(ShareListenerService));
-            var appender = new log4net.Appender.RollingFileAppender();
-            appender.AppendToFile = true;
-            appender.File = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"\"+ServiceName+@"\Logs\listener.log"; 
-            appender.MaxFileSize = 100000;
-            appender.MaxSizeRollBackups = 10;
-            appender.RollingStyle = log4net.Appender.RollingFileAppender.RollingMode.Size;
+            var appender = new log4net.Appender.RollingFileAppender
+            {
+                AppendToFile = true,
+                File = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"\" + ServiceName +
+                       @"\Logs\listener.log",
+                MaxFileSize = 100000,
+                MaxSizeRollBackups = 10,
+                RollingStyle = log4net.Appender.RollingFileAppender.RollingMode.Size
+            };
             log4net.Config.BasicConfigurator.Configure(appender);
             appender.Threshold = log4net.Core.Level.All;
             appender.ActivateOptions();

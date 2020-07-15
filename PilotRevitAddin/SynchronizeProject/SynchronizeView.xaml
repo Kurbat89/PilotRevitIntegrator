@@ -1,0 +1,158 @@
+﻿<UserControl x:Class="PilotRevitAddin.SynchronizeProject.SynchronizeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:controls="clr-namespace:Ascon.Pilot.Theme.Controls;assembly=Ascon.Pilot.Theme"
+             xmlns:theme="clr-namespace:Ascon.Pilot.Theme;assembly=Ascon.Pilot.Theme"
+             xmlns:tools="clr-namespace:Ascon.Pilot.Theme.Tools;assembly=Ascon.Pilot.Theme"
+             xmlns:local="clr-namespace:PilotRevitAddin.SynchronizeProject"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800" d:DataContext="{d:DesignInstance local:SynchronizeViewModel}">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <tools:SharedResourceDictionary Source="/Ascon.Pilot.Theme;component/Themes/StandardControls.xaml" />
+                <tools:SharedResourceDictionary
+                    Source="/Ascon.Pilot.Theme;component/Themes/sharedresources/sharedresources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" DataContext="{Binding Synchronize}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <StackPanel>
+                    <TextBlock
+                        Margin="5"
+                        Text="Настройки автоматической синхронизации" />
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <CheckBox IsChecked="{Binding SyncOn, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBlock Text="Включить автоматическую синхронизацию" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <ComboBox
+                            HorizontalContentAlignment="Center"
+                            Width="70"
+                            SelectedItem="{Binding SelectTimeIntervals}"
+                            ItemsSource="{Binding TimeIntervals}" />
+                        <TextBlock
+                            Text="Интервал между синхонизациями в минутах"
+                            Margin="5" />
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Row="1" IsEnabled="{Binding SyncOn}">
+                <StackPanel>
+                    <TextBlock
+                        Margin="5"
+                        Style="{StaticResource {theme:StyleKey DialogTextBlockStyle}}"
+                        Text="Путь к центральной модели" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox
+                            IsReadOnly="True"
+                            Margin="5"
+                            Grid.Column="0"
+                            Text="{Binding CentralModelPath}"
+                            tools:TextBoxHintMessageBehavior.HintMessage="Путь до модели ../..rvt" />
+                        <Button
+                            Grid.Column="1"
+                            Margin="5"
+                            Content="Обзор" />
+                    </Grid>
+
+                    <TextBlock
+                        Margin="5"
+                        Text="После синхронизации освободить следующие рабочие наборы и элементы:" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0">
+                            <StackPanel Margin="5" Orientation="Horizontal">
+                                <CheckBox
+                                    IsChecked="{Binding RelinquishModel.StandardWorksets, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBlock Text="Рабочие наборы стандартов проекта" />
+                            </StackPanel>
+                            <StackPanel Margin="5" Orientation="Horizontal">
+                                <CheckBox
+                                    IsChecked="{Binding RelinquishModel.FamilyWorkset , UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBlock Text="Рабочие наборы семейств" />
+                            </StackPanel>
+                            <StackPanel Margin="5" Orientation="Horizontal">
+                                <CheckBox
+                                    IsChecked="{Binding RelinquishModel.CheckedOutElements, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBlock Text="Заимствованные элементы" />
+                            </StackPanel>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1">
+                            <StackPanel Margin="5" Orientation="Horizontal">
+                                <CheckBox
+                                    IsChecked="{Binding RelinquishModel.ViewWorksets , UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBlock Text="Рабочие наборы видов" />
+                            </StackPanel>
+                            <StackPanel Margin="5" Orientation="Horizontal">
+                                <CheckBox
+                                    IsChecked="{Binding RelinquishModel.UserWorksets, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBlock
+                                    VerticalAlignment="Center"
+                                    Text="Пользовательские рабочие наборы" />
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+                    <TextBlock
+                        Text="Комментарий:"
+                        Margin="5" />
+                    <TextBox
+                        Margin="5"
+                        Text="{Binding WithCentralModel.Comment, UpdateSourceTrigger=PropertyChanged}"
+                        tools:TextBoxHintMessageBehavior.HintMessage="Введите комментарий" />
+                    <StackPanel Margin="5" Orientation="Horizontal">
+                        <CheckBox
+                            IsChecked="{Binding WithCentralModel.SaveLocalBefore, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBlock Text="Сохранять локальный файл перед синхронизацией" />
+                    </StackPanel>
+                    <StackPanel Margin="5" Orientation="Horizontal">
+                        <CheckBox
+                            IsChecked="{Binding WithCentralModel.SaveLocalAfter, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBlock Text="Сохранять локальный файл после синхронизации" />
+                    </StackPanel>
+                    <StackPanel Margin="5" Orientation="Horizontal">
+                        <CheckBox
+                            IsChecked="{Binding WithCentralModel.Compact}" />
+                        <TextBlock
+                            Text="Сжать модель" />
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="1">
+            <StackPanel
+                HorizontalAlignment="Right"
+                Orientation="Horizontal">
+                <Button
+                    Command="{Binding OkCommand}"
+                    CommandParameter="{Binding Synchronize}"
+                    Margin="5"
+                    Content="Ok" />
+                <Button
+                    Command="{Binding CancelCommand}"
+                    Margin="5"
+                    Content="Cancel" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

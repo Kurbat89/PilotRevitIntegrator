@@ -1,7 +1,7 @@
-﻿using System;
-using log4net;
+﻿using Ascon.Pilot.Common;
 using Ascon.Pilot.SharedProject;
-using Ascon.Pilot.Common;
+using log4net;
+using System;
 
 namespace PilotRevitShareListener.Server
 {
@@ -12,7 +12,7 @@ namespace PilotRevitShareListener.Server
         private Settings _settings;
         private bool _isConnected;
 
-        public ConnectProvider(ILog logger , Settings settings, IServerConnector serverConnector)
+        public ConnectProvider(ILog logger, Settings settings, IServerConnector serverConnector)
         {
             _logger = logger;
             _settings = settings;
@@ -20,7 +20,7 @@ namespace PilotRevitShareListener.Server
             _isConnected = false;
         }
 
-        public string ExceptionMessage { get; private set;}
+        public string ExceptionMessage { get; private set; }
 
         public bool CheckConnection()
         {
@@ -35,14 +35,14 @@ namespace PilotRevitShareListener.Server
             {
                 subs = new string[] { command.args["url"], "" }; //if database name wasn't typed
             }
-            
+
             _settings.ServerUrl = subs[0];
             _settings.DbName = subs[1];
             _settings.Login = command.args["login"];
             _settings.Password = command.args["password"].EncryptAes();
 
             if (!Reconnect())
-            { 
+            {
                 _settings.ServerUrl = (string)dataBuffer[0];
                 _settings.DbName = (string)dataBuffer[1];
                 _settings.Login = (string)dataBuffer[2];
@@ -59,7 +59,8 @@ namespace PilotRevitShareListener.Server
                 Disconnect();
                 Connect();
                 return true;
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 _logger.InfoFormat("ex.Message");
                 ExceptionMessage = ex.Message;

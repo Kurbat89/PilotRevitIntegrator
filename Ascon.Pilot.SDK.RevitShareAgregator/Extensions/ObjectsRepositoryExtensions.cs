@@ -4,9 +4,9 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Threading;
+using Ascon.Pilot.SDK;
 
-namespace Ascon.Pilot.SDK.Extensions
+namespace Ascon.Pilot.RevitShareAgregator.Extensions
 {
     public interface IAsyncMethods
     {

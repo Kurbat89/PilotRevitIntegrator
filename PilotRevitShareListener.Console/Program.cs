@@ -1,9 +1,9 @@
-﻿using System;
+﻿using log4net;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.ExceptionServices;
 using System.Threading.Tasks;
-using log4net;
 
 namespace PilotRevitShareListener.Console
 {
