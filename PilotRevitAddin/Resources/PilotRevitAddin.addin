@@ -2,7 +2,7 @@
 <RevitAddIns>
   <AddIn Type="Application">
     <Name>PilotRevitAddin</Name>
-    <Assembly>PilotRevitAddin.dll</Assembly>
+    <Assembly>PilotRevitAddin\PilotRevitAddin.dll</Assembly>
     <ClientId>40A992C2-CD30-4F75-8632-FEE0A4B8B44C</ClientId>
     <FullClassName>PilotRevitAddin.ExternalApplication</FullClassName>
     <VendorId>ASCON</VendorId>

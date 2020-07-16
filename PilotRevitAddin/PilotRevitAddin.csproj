@@ -100,7 +100,6 @@
     <Compile Include="Utils\ImageUtils.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\PilotSync.addin" />
     <EmbeddedResource Include="Resources\updateSettingsIcon.png" />
     <EmbeddedResource Include="Resources\startDesigningIcon.png" />
     <EmbeddedResource Include="Resources\prepareIcon.png" />
@@ -113,6 +112,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Resources\PilotRevitAddin.addin" />
     <None Include="Resources\SynchronizeSettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
