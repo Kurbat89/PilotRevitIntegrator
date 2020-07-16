@@ -56,22 +56,12 @@
                         Margin="5"
                         Style="{StaticResource {theme:StyleKey DialogTextBlockStyle}}"
                         Text="Путь к центральной модели" />
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <TextBox
+
+                    <TextBox
                             IsReadOnly="True"
                             Margin="5"
-                            Grid.Column="0"
                             Text="{Binding CentralModelPath}"
                             tools:TextBoxHintMessageBehavior.HintMessage="Путь до модели ../..rvt" />
-                        <Button
-                            Grid.Column="1"
-                            Margin="5"
-                            Content="Обзор" />
-                    </Grid>
 
                     <TextBlock
                         Margin="5"

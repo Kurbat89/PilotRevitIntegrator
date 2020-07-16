@@ -1,8 +1,8 @@
 {
   "SyncOn": true,
-  "SelectTimeIntervals": 20,
+  "SelectTimeIntervals": 60,
   "WithCentralModel": {
-    "Comment": "Test",
+    "Comment": "AutoSynchronize",
     "Compact": false,
     "SaveLocalAfter": true,
     "SaveLocalBefore": true
@@ -13,6 +13,5 @@
     "StandardWorksets": false,
     "UserWorksets": false,
     "ViewWorksets": false
-  },
-  "CloseResult": null
+  }
 }

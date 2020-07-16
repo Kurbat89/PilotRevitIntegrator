@@ -32,7 +32,7 @@ namespace PilotRevitAddin.SynchronizeProject
 
                 _timer?.Dispose();
 
-                _timer = new Timer(timeCB, null, settings.SelectTimeIntervals, settings.SelectTimeIntervals);
+                _timer = new Timer(timeCB, null, settings.SelectTimeIntervals * 60000, settings.SelectTimeIntervals * 60000);
             }
             else
             {

@@ -2,6 +2,7 @@
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Autodesk.Revit.UI;
 
 namespace PilotRevitAddin.SynchronizeProject
 {
@@ -35,18 +36,26 @@ namespace PilotRevitAddin.SynchronizeProject
 
         private static string Load()
         {
-            var fileInfo = new FileInfo(SettingsPath.SynchronizeSettingsPath);
-
-            int counter = 0;
-            while (IsFileLocked(fileInfo) || counter < 10)
+            try
             {
-                counter++;
-                Thread.Sleep(10);
+                var fileInfo = new FileInfo(SettingsPath.SynchronizeSettingsPath);
+
+                int counter = 0;
+                while (IsFileLocked(fileInfo) && counter < 10)
+                {
+                    counter++;
+                    Thread.Sleep(10);
+                }
+
+                using (var sr = new StreamReader(SettingsPath.SynchronizeSettingsPath))
+                {
+                    return sr.ReadToEnd();
+                }
             }
-
-            using (var sr = new StreamReader(SettingsPath.SynchronizeSettingsPath))
+            catch (System.Exception ex)
             {
-                return sr.ReadToEnd();
+                TaskDialog.Show(ex.Message, ex.Message);
+                return string.Empty;
             }
         }
 
@@ -58,7 +67,7 @@ namespace PilotRevitAddin.SynchronizeProject
             {
                 stream = file.Open(FileMode.Open, FileAccess.Read, FileShare.None);
             }
-            catch (IOException)
+            catch (IOException ex)
             {
                 return true;
             }
