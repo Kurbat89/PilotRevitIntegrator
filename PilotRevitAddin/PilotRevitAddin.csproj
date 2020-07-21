@@ -87,6 +87,7 @@
     <Compile Include="SynchronizeProject\SettingsPath.cs" />
     <Compile Include="SynchronizeProject\SynchronizeAvailability.cs" />
     <Compile Include="SynchronizeProject\SynchronizeCommand.cs" />
+    <Compile Include="SynchronizeProject\SynchronizeControl.cs" />
     <Compile Include="SynchronizeProject\SynchronizeModel.cs" />
     <Compile Include="SynchronizeProject\SynchronizeSettingsWatcher.cs" />
     <Compile Include="SynchronizeProject\SynchronizeTimer.cs" />

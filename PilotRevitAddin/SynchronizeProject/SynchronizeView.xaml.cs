@@ -1,6 +1,7 @@
 ﻿using Ascon.Pilot.Theme.ColorScheme;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Ascon.Pilot.Theme;
 
 namespace PilotRevitAddin.SynchronizeProject
 {
@@ -13,6 +14,7 @@ namespace PilotRevitAddin.SynchronizeProject
         {
             var accentColor = (Color)ColorConverter.ConvertFromString("#FF7F95C8");
             ColorScheme.Initialize(accentColor);
+            var color = AccentColor.Value;
 
             InitializeComponent();
         }

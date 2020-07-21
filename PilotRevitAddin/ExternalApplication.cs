@@ -17,7 +17,7 @@ namespace PilotRevitAddin
         private static readonly string AddInPath = typeof(ExternalApplication).Assembly.Location;
         private const string PilotIceTabName = "Pilot-ICE";
 
-        private readonly SynchronizeTimer _synchronizeTimer = new SynchronizeTimer();
+        private SynchronizeControl _synchronizeControl;
 
         public Result OnStartup(UIControlledApplication application)
         {
@@ -36,8 +36,8 @@ namespace PilotRevitAddin
         private void CreatePilotTab(UIControlledApplication application)
         {
             application.ControlledApplication.DocumentOpened += ControlledApplication_DocumentOpened;
-            application.Idling += Application_Idling;
-
+            _synchronizeControl = new SynchronizeControl(application);
+            
             application.CreateRibbonTab(PilotIceTabName);
             var pilotRibbon = application.CreateRibbonPanel(PilotIceTabName, "Панель команд Pilot-ICE");
             var prepareButton = new PushButtonData("PrepareButton", "Подготовить проект", AddInPath,
@@ -76,52 +76,6 @@ namespace PilotRevitAddin
             pilotRibbon.AddItem(startButton);
             pilotRibbon.AddItem(updateProjectSettingsButton);
             pilotRibbon.AddItem(synchronizeProjectButton);
-        }
-
-        private void Application_Idling(object sender, Autodesk.Revit.UI.Events.IdlingEventArgs e)
-        {
-            var uiApp = (UIApplication)sender;
-
-            if (uiApp.ActiveUIDocument == null)
-                return;
-
-            var document = uiApp.ActiveUIDocument.Document;
-
-            if (!document.IsWorkshared)
-                return;
-
-            if (!_synchronizeTimer.SynchronizeFlag) return;
-
-            _synchronizeTimer.SynchronizeFlag = false;
-            var settings = _synchronizeTimer.GetSettings();
-
-
-            var centralOption = GetCentralOptions(settings);
-
-            document.SynchronizeWithCentral(new TransactWithCentralOptions(), centralOption);
-        }
-        private SynchronizeWithCentralOptions GetCentralOptions(SynchronizeModel settings)
-        {
-            var relinquishOptions = new RelinquishOptions(false)
-            {
-                UserWorksets = settings.RelinquishModel.UserWorksets,
-                ViewWorksets = settings.RelinquishModel.ViewWorksets,
-                StandardWorksets = settings.RelinquishModel.StandardWorksets,
-                CheckedOutElements = settings.RelinquishModel.CheckedOutElements,
-                FamilyWorksets = settings.RelinquishModel.FamilyWorkset
-            };
-
-            var options = new SynchronizeWithCentralOptions()
-            {
-                SaveLocalBefore = settings.WithCentralModel.SaveLocalBefore,
-                Compact = settings.WithCentralModel.Compact,
-                Comment = settings.WithCentralModel.Comment,
-                SaveLocalAfter = settings.WithCentralModel.SaveLocalAfter
-            };
-
-            options.SetRelinquishOptions(relinquishOptions);
-
-            return options;
         }
 
         private void ControlledApplication_DocumentOpened(object sender, Autodesk.Revit.DB.Events.DocumentOpenedEventArgs e)
