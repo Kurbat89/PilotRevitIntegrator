@@ -1,12 +1,9 @@
-﻿using System;
+﻿using Autodesk.Revit.ApplicationServices;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Autodesk.Revit.ApplicationServices;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 
 namespace PilotRevitAddin.SynchronizeProject
 {
@@ -29,7 +26,7 @@ namespace PilotRevitAddin.SynchronizeProject
         {
             if (!_documentsPool.Any())
                 return;
-            
+
             e.SetRaiseWithoutDelay();
 
             if (!_synchronizeTimer.SynchronizeFlag) return;
@@ -50,11 +47,11 @@ namespace PilotRevitAddin.SynchronizeProject
         private void ControlledApplication_DocumentOpened(object sender, Autodesk.Revit.DB.Events.DocumentOpenedEventArgs e)
         {
             var doc = e.Document;
-            var fileName =  Path.GetFileName(doc.PathName);
+            var fileName = Path.GetFileName(doc.PathName);
 
             if (!doc.IsWorkshared) return;
 
-            if (_documentsPool.Where(z=>z.IsValidObject).All(z => Path.GetFileName(z.PathName) != fileName))
+            if (_documentsPool.Where(z => z.IsValidObject).All(z => Path.GetFileName(z.PathName) != fileName))
                 _documentsPool.Add(doc);
         }
 
@@ -69,7 +66,7 @@ namespace PilotRevitAddin.SynchronizeProject
                 {
                     if (!documentPool.IsValidObject)
                         continue;
-                    
+
                     var fileName = Path.GetFileName(doc.PathName);
                     var name = Path.GetFileName(documentPool.PathName);
                     if (fileName == name)

@@ -1,8 +1,8 @@
-﻿using Newtonsoft.Json;
+﻿using Autodesk.Revit.UI;
+using Newtonsoft.Json;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Autodesk.Revit.UI;
 
 namespace PilotRevitAddin.SynchronizeProject
 {

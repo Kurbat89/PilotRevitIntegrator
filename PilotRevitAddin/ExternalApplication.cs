@@ -37,7 +37,7 @@ namespace PilotRevitAddin
         {
             application.ControlledApplication.DocumentOpened += ControlledApplication_DocumentOpened;
             _synchronizeControl = new SynchronizeControl(application);
-            
+
             application.CreateRibbonTab(PilotIceTabName);
             var pilotRibbon = application.CreateRibbonPanel(PilotIceTabName, "Панель команд Pilot-ICE");
             var prepareButton = new PushButtonData("PrepareButton", "Подготовить проект", AddInPath,

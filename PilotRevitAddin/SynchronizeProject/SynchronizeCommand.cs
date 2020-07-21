@@ -13,9 +13,7 @@ namespace PilotRevitAddin.SynchronizeProject
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             var doc = commandData.Application.ActiveUIDocument.Document;
-
             ShowDialogSynchronize(doc);
-
             return Result.Succeeded;
         }
 

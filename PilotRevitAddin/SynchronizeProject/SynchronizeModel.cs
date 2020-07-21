@@ -18,7 +18,7 @@ namespace PilotRevitAddin.SynchronizeProject
         public string CentralModelPath { get; set; }
 
         [JsonIgnore]
-        public List<int> TimeIntervals { get; set; } = new List<int>() {1, 5, 10, 15, 20, 30, 60, 120, 180, 240, 300 };
+        public List<int> TimeIntervals { get; set; } = new List<int>() { 1, 5, 10, 15, 20, 30, 60, 120, 180, 240, 300 };
 
         public SynchronizeModel()
         {

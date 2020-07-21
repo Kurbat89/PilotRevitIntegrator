@@ -1,7 +1,10 @@
-﻿using Autodesk.Revit.DB;
+﻿using Ascon.Pilot.Theme.Controls;
+using Autodesk.Revit.DB;
 using Newtonsoft.Json;
 using PilotRevitAddin.CommandsPrism;
+using PilotRevitAddin.SynchronizeProject.Journal;
 using System.IO;
+using System.Windows;
 using System.Windows.Input;
 
 namespace PilotRevitAddin.SynchronizeProject
@@ -60,6 +63,37 @@ namespace PilotRevitAddin.SynchronizeProject
             {
                 return _cancelCommand ?? (_cancelCommand = new CommandLight(obj => { base.CloseView(true); }));
             }
+        }
+
+        private ICommand _showJournalCommand;
+
+        public ICommand ShowJournalCommand
+        {
+            get
+            {
+                return _showJournalCommand ?? (_showJournalCommand = new CommandLight(obj =>
+                {
+                    ShowJournal();
+                }));
+            }
+        }
+
+        private void ShowJournal()
+        {
+            var viewModel = new JournalViewModel(_document);
+            var control = new JournalView();
+            var window = new PureWindow
+            {
+                Title = "Журнал синхронизаций",
+                WindowStartupLocation = WindowStartupLocation.CenterScreen,
+                Content = control,
+                DataContext = viewModel,
+                Height = 450,
+                Width = 600,
+                CanClose = true,
+                ResizeMode = ResizeMode.NoResize
+            };
+            window.Show();
         }
     }
 }

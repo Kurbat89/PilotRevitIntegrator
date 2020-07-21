@@ -23,6 +23,14 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
+        <!--<TextBlock
+            Margin="5"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top">
+            <Hyperlink Command="{Binding ShowJournalCommand}">
+                Просмотреть журнал синхронизаций
+            </Hyperlink>
+        </TextBlock>-->
         <Grid Grid.Row="0" DataContext="{Binding Synchronize}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />

@@ -31,7 +31,7 @@ namespace PilotRevitAddin.SynchronizeProject
                 var timeCB = new TimerCallback(TikTakTimeToGetUp);
 
                 _timer?.Dispose();
-                
+
                 _timer = new Timer(timeCB, null, settings.SelectTimeIntervals * 60000, settings.SelectTimeIntervals * 60000);
             }
             else

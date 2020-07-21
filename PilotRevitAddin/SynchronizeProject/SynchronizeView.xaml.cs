@@ -1,7 +1,7 @@
-﻿using Ascon.Pilot.Theme.ColorScheme;
+﻿using Ascon.Pilot.Theme;
+using Ascon.Pilot.Theme.ColorScheme;
 using System.Windows.Controls;
 using System.Windows.Media;
-using Ascon.Pilot.Theme;
 
 namespace PilotRevitAddin.SynchronizeProject
 {
